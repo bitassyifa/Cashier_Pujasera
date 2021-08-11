@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screen.fadipay.FadipayActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:layout_editor_absoluteX="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:foregroundGravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Harga                  :"
+                android:textColor="@color/abu"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            <id.adiandrea.rupiahedittext.RupiahEditText
+                android:id="@+id/Harga"
+                android:textSize="14dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+<!--            <EditText-->
+<!--                android:id="@+id/Harga"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:drawablePadding="2dp"-->
+<!--                android:ems="10"-->
+<!--                android:text=""-->
+<!--                android:fontFamily="@font/poppins_semibold"-->
+<!--                android:hint=""-->
+<!--                android:inputType="numberDecimal"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="14dp"-->
+<!--                android:theme="@style/MyEditTextTheme"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:foregroundGravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Total                    :"
+                android:textColor="@color/abu"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="2dp"
+                android:ems="10"
+                android:fontFamily="@font/poppins_semibold"
+          android:layout_gravity="center"
+
+                android:inputType="number"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:theme="@style/MyEditTextTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageButton
+                android:id="@+id/tambah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/teal_700"
+                android:clickable="true"
+                android:src="@drawable/ic_add"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_clear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#BD0404"
+                android:text="clear"
+                android:textAllCaps="false"
+                app:icon="@drawable/ic_delete" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:foregroundGravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/poppins_medium"
+                android:text="No Kartu             :"
+                android:textColor="@color/abu"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/No_kartu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="2dp"
+                android:ems="10"
+                android:fontFamily="@font/poppins_semibold"
+                android:hint=""
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:theme="@style/MyEditTextTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:foregroundGravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Nama                  :"
+                android:textColor="@color/abu"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/Nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="2dp"
+                android:ems="10"
+                android:fontFamily="@font/poppins_semibold"
+                android:hint=""
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:theme="@style/MyEditTextTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:foregroundGravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Saldo                   :"
+                android:textColor="@color/abu"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/saldo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="2dp"
+                android:ems="10"
+                android:fontFamily="@font/poppins_semibold"
+                android:hint=""
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:theme="@style/MyEditTextTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:foregroundGravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:fontFamily="@font/poppins_medium"
+                android:text="PIN                        :"
+                android:textColor="@color/abu"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <EditText
+                android:id="@+id/pin_fadi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_semibold"
+                android:hint="Masukan Pin"
+                android:inputType="numberPassword"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:theme="@style/MyEditTextTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cekpin1"
+                android:layout_weight="1.5"
+                android:text="cek"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_print"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--       android:layout_marginTop="20dp"-->
+<!--        android:layout_marginRight="35dp"-->
+<!--        android:backgroundTint="@color/inti"-->
+<!--        android:drawableTop="@drawable/ic_print"-->
+
+<!--        android:fontFamily="@font/poppins_bold"-->
+<!--        android:text="Print"-->
+<!--        android:textSize="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+
+<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />-->
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#1B5888"
+        android:drawableTop="@drawable/ic_print"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Save and Print"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/nfc_tag"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Tap kartu "-->
+<!--        android:textSize="22dp"-->
+<!--        android:gravity="center"-->
+<!--        android:fontFamily="@font/poppins_bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>

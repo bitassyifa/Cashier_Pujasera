@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".screen.login.LoginFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_marginTop="20dp"
+        android:layout_width="170dp"
+        android:layout_height="200dp"
+        android:src="@drawable/lg_kasir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:layout_margin="20dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/inti"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Username"
+        android:textColor="@color/abu"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <EditText
+        android:drawablePadding="2dp"
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="15dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:inputType="text"
+        android:hint="Enter your username"
+        android:textColor="@color/black"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:theme="@style/MyEditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Password"
+        android:textColor="@color/abu"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:ems="10"
+        android:fontFamily="@font/poppins_semibold"
+        android:hint="Enter your password"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:theme="@style/MyEditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView3"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:fontFamily="@font/poppins_medium"-->
+<!--        android:text="Forgot password ?"-->
+<!--        android:textColor="@color/inti"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/password"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/password" />-->
+<!--    <Spinner-->
+
+<!--        android:id="@+id/pilih_pjs"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/password"-->
+<!--       android:background="@drawable/bg_spinner"-->
+<!--        />-->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password">
+
+        <TextView
+            android:id="@+id/nama_pegawai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1.3"
+            android:text="Pujasera"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_spinner"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/pilih_pjs"
+                style="@style/SpinnerTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/drop" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textSize="16dp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:layout_margin="20dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

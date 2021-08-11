@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Cashier_Pujasera</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shared_preference_name">com.projectassyifa.shared.preference</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_method_key">LOGIN_METHOD</string>
+    <string name="id_pegawai">Id Pegawai</string>
+    <string name="nama_pegawai">Nama Pegawai</string>
+    <string name="nip">NIP</string>
+    <string name="foto">Foto Pegawai</string>
+    <string name="no_tlp">Nomer Tlp</string>
+    <string name="unit">UNIT</string>
+    <string name="divisi">Divisi</string>
+    <string name="bidang">Bidang</string>
+    <string name="alamat_tinggal">Alamat</string>
+    <string name="tgl_lahir">tgl</string>
+    <string name="agent">agent</string>
+    <string name="default_value">Null</string>
+    <string name="tanggal_mulai_tugas">TMT</string>
+    <string name="status_aktif">Status Aktif</string>
+    <string name="status_pegawai">Status Pegawai</string>
+    <string name="fungsional_01">Fungsional</string>
+    <string name="struktural">Struktural</string>
+    <string name="atasan_langsung">Atasan Langsung</string>
+    <string name="email">Email</string>
+    <string name="selected_item">select</string>
+    <string-array name="pujasera">
+        <item>pujasera_putri</item>
+        <item>pujasera_putra</item>
+    </string-array>
+    <string name="pjs">pujasera</string>
+</resources>
