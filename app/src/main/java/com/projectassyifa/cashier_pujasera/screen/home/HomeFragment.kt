@@ -56,7 +56,12 @@ class HomeFragment : Fragment(),View.OnClickListener {
             getString(R.string.pjs),
             getString(R.string.default_value)
         )
+        val nama= dataLogin?.getString(
+            getString(R.string.nama_pegawai),
+            getString(R.string.default_value)
+        )
         pjsr.text = pjs
+        nama_kasir.text = "ahlan, $nama"
     }
 
     override fun onClick(v: View?) {

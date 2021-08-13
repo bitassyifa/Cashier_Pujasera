@@ -31,7 +31,7 @@ class MemberRepo @Inject constructor( val memberAPI: MemberAPI) {
                         gson.fromJson(gson.toJson(res), listMember)
                     memberResponse.value = Output
 //                    memberResponse.value?.kode =response.code()
-                    println("RES ${res.status}")
+
                 } else {
                     Toast.makeText(
                         context,

@@ -32,7 +32,7 @@ class CekPinRepo @Inject constructor( val memberAPI: CekPinAPI) {
                         gson.fromJson(gson.toJson(res), listMember)
                     memberResponse.value = Output
 //                    memberResponse.value?.kode =response.code()
-                    println("RES ${res?.status}")
+
                     Toast.makeText(
                         context,
                         "Succes",
@@ -44,7 +44,7 @@ class CekPinRepo @Inject constructor( val memberAPI: CekPinAPI) {
                         "Pin tidak cocok, cobalagi",
                         Toast.LENGTH_SHORT
                     ).show()
-                    println("RES ${res?.status}")
+
                     userLogin.value = res
 
                 }

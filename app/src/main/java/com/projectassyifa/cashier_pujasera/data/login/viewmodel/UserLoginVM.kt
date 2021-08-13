@@ -13,6 +13,6 @@ class UserLoginVM  @Inject constructor(var userLoginRepo: UserLoginRepo){
 
     fun loginUser(userLoginModel: UserLoginModel, context: Context){
         userLoginRepo.loginUser(userLoginModel,context)
-        println("DATA VM ${userLoginModel.username},${userLoginModel.password}")
+
     }
 }

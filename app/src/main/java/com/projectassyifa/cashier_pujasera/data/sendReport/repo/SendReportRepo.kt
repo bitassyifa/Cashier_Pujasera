@@ -33,8 +33,7 @@ class SendReportRepo @Inject constructor(val sendReportAPI: SendReportAPI)  {
                         gson.fromJson(gson.toJson(res), list)
                     reportResponse.value = Output
 //                    memberResponse.value?.kode =response.code()
-                    println("KIRIM FADI ${res?.kirim_fadi}")
-                    println("SUCCESS ${res?.success}")
+
                     Toast.makeText(
                         context,
                         "data berhasil disimpan",

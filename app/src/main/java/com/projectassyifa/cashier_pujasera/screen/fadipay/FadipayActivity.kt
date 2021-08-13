@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.nfc.FormatException
 import android.nfc.NfcAdapter
 import android.nfc.NfcManager
@@ -150,20 +151,29 @@ btn_save.isVisible = false
             getString(R.string.pjs),
             getString(R.string.default_value)
         )
-        println("MASUK  RESULT")
+
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val timeNow = sdf.format(Date())
         if(resultCode == Activity.RESULT_OK && requestCode == ConnectBluetoothActivity.CONNECT_BLUETOOTH){
             // ThermalPrinter is ready
             ThermalPrinter.instance
 
                 .write("$pjs", PrintAlignment.CENTER, PrintFont.LARGE)
+                .writeImage(BitmapFactory.decodeResource(getResources(), R.drawable.kasir_bw2))
                 .fillLineWith('-')
                 .write("")
                 .write("Nama Pelanggan : $nama_pelanggan  ",PrintAlignment.LEFT, PrintFont.NORMAL)
                 .write("Total Belanja : $total_belanja  ",PrintAlignment.LEFT, PrintFont.NORMAL)
                 .write("")
-                .fillLineWith('=')
+                .fillLineWith('-')
                 .write("Kasir : $nama_kasir  ",PrintAlignment.LEFT, PrintFont.NORMAL)
+                .write("Waktu : $timeNow  ",PrintAlignment.LEFT, PrintFont.NORMAL)
                 .write("")
+                .fillLineWith('-')
+                .write("### LUNAS ###", PrintAlignment.CENTER, PrintFont.LARGE)
+                .write("")
+                .fillLineWith('-')
+                .write("Trimakasih", PrintAlignment.CENTER, PrintFont.LARGE)
                 .write("")
 
 //                .writeImage(BitmapFactory.decodeResource(getResources(), R.drawable.lg_kawarung))
@@ -274,7 +284,7 @@ btn_save.isVisible = false
                 CoroutineScope(Dispatchers.IO).launch {
                     db.saleDao().addSale(
                         SaleModel(0,nama_pelanggan.toString(),nomor_kartu.toString(),sum,
-                            currentDate.toString(),pjs.toString(),"CAGAK",username.toString(),"OPEN")
+                            currentDate.toString(),pjs.toString(),"WANAREJA",username.toString(),"OPEN")
                     )
 
                 }
@@ -283,10 +293,10 @@ btn_save.isVisible = false
                     "DATA TELAH DISIMPAN",
                     Toast.LENGTH_SHORT
                 ).show()
-//                startActivityForResult(
-//                    Intent(this, ConnectBluetoothActivity::class.java),
-//                    ConnectBluetoothActivity.CONNECT_BLUETOOTH
-//                )
+                startActivityForResult(
+                    Intent(this, ConnectBluetoothActivity::class.java),
+                    ConnectBluetoothActivity.CONNECT_BLUETOOTH
+                )
                     }
                 }
 

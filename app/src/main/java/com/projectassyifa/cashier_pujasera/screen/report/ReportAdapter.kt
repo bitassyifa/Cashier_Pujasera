@@ -3,6 +3,8 @@ package com.projectassyifa.cashier_pujasera.screen.report
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +16,7 @@ import com.projectassyifa.cashier_pujasera.container.MyApplication
 import com.projectassyifa.cashier_pujasera.room.SaleModel
 import kotlinx.android.synthetic.main.adapter_report.view.*
 
-class ReportAdapter (private val listReport :ArrayList<SaleModel>,var activity: Activity) : RecyclerView.Adapter<ReportAdapter.SaleVH>() {
+class ReportAdapter (var listReport :ArrayList<SaleModel>,var activity: Activity) : RecyclerView.Adapter<ReportAdapter.SaleVH>() {
     class SaleVH (val view : View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SaleVH {
@@ -32,13 +34,13 @@ class ReportAdapter (private val listReport :ArrayList<SaleModel>,var activity: 
         holder.view.nama_pelanggan.text = sale.nama_pelanggan
         holder.view.total_belanja.text = sale.total_harga.toString()
         holder.view.status.text = sale.status_data
+
+        if (sale.status_data == "CLOSE"){
+            holder.view.wadah_data.setBackgroundColor(Color.GREEN)
+
+        }
         holder.view.wadah_data.setOnClickListener {
-            println("Nama ${sale.nama_pelanggan}")
-            println("Server ${sale.server}")
-            println("DB ${sale.db}")
-            println("JUMLAH ${sale.total_harga}")
-            println("ID pelanggan ${sale.no_kartu}")
-            println("stts${sale.status_data}")
+
 
             val dialog = DialogClosingReport()
             val bundle= Bundle()
@@ -52,6 +54,7 @@ class ReportAdapter (private val listReport :ArrayList<SaleModel>,var activity: 
             bundle.putString("jumlah",sale.total_harga.toString())
             bundle.putString("tanggal",sale.tanggal)
             bundle.putString("created_by",sale.created_by)
+            bundle.putString("status",sale.status_data)
             val ft = (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
             dialog.show(ft, ContentValues.TAG)
 
