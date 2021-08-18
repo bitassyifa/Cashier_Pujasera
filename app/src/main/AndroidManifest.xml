@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cashier_Pujasera"
         android:usesCleartextTraffic="true">
-        <activity android:name=".screen.report.ReportActivity"></activity>
-
+        <activity android:name=".screen.cash.CashPaymentActivity"></activity>
+        <activity android:name=".screen.income.IncomeActivity" />
+        <activity android:name=".screen.report_server.ReportServerActivity" />
+        <activity android:name=".screen.report.ReportActivity" />
         <activity android:name=".screen.fadipay.FadipayActivity" />
         <activity android:name=".screen.home.HomeActivity" />
         <activity android:name=".screen.login.Login_Activity" />

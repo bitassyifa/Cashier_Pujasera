@@ -28,7 +28,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     var dataLogin : SharedPreferences? = null
     lateinit var navController : NavController
     var pujasera : String? = null
-
+    var server_pujasera : String? = null
     @Inject
     lateinit var userLoginVM: UserLoginVM
 
@@ -82,6 +82,33 @@ class LoginFragment : Fragment(), View.OnClickListener {
             }
         }
 
+        val s_pjs = resources.getStringArray(R.array.server_pujasera)
+
+        // access the spinner
+        val spinner_server =  view.findViewById<Spinner>(R.id.pilih_server)
+
+        if (spinner_server != null) {
+            val adapter = this.context?.let {
+                ArrayAdapter(
+                    it,
+                    android.R.layout.simple_spinner_item, s_pjs)
+            }
+            spinner_server.adapter = adapter
+
+            spinner_server.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    server_pujasera= s_pjs[position]
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+        }
+
 
         //login validation
         if (dataLogin?.contains(getString(R.string.username))!! && dataLogin?.contains(getString(R.string.login_method_key))!!)
@@ -124,6 +151,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                                 this?.putString(getString(R.string.atasan_langsung), it.atasan_langsung)
                                 this?.putString(getString(R.string.email), it.email)
                                 this?.putString(getString(R.string.pjs), pujasera)
+                                this?.putString(getString(R.string.server_pjs), server_pujasera)
                                 this?.putString(
                                     getString(R.string.login_method_key),
                                     "appLogin"

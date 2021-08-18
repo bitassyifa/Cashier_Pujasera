@@ -10,9 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.projectassyifa.cashier_pujasera.R
+import com.projectassyifa.cashier_pujasera.screen.cash.CashPaymentActivity
 import com.projectassyifa.cashier_pujasera.screen.fadipay.FadipayActivity
+import com.projectassyifa.cashier_pujasera.screen.income.IncomeActivity
 import com.projectassyifa.cashier_pujasera.screen.login.Login_Activity
 import com.projectassyifa.cashier_pujasera.screen.report.ReportActivity
+import com.projectassyifa.cashier_pujasera.screen.report_server.ReportServerActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -48,8 +51,14 @@ class HomeFragment : Fragment(),View.OnClickListener {
             startActivity(move)
         }
 
-        menu4.setOnClickListener {
-            startActivity(Intent(this.context,ReportActivity::class.java))
+        menu2.setOnClickListener {
+            startActivity(Intent(this.context,CashPaymentActivity::class.java))
+        }
+        menu5.setOnClickListener {
+            startActivity(Intent(this.context,ReportServerActivity::class.java))
+        }
+        menu6.setOnClickListener {
+            startActivity(Intent(this.context,IncomeActivity::class.java))
         }
 
         val pjs= dataLogin?.getString(
@@ -60,7 +69,12 @@ class HomeFragment : Fragment(),View.OnClickListener {
             getString(R.string.nama_pegawai),
             getString(R.string.default_value)
         )
+        val server= dataLogin?.getString(
+            getString(R.string.server_pjs),
+            getString(R.string.default_value)
+        )
         pjsr.text = pjs
+        server_pjs.text= server
         nama_kasir.text = "ahlan, $nama"
     }
 

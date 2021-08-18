@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 class SendReportVM @Inject constructor(var sendReportRepo: SendReportRepo){
 
+    var data_response = sendReportRepo.reportResponse
     fun reporting (sendReportModel : SendReportModel, context: Context){
         sendReportRepo.reporting(sendReportModel,context)
     }

@@ -30,5 +30,10 @@
         <item>pujasera_putri</item>
         <item>pujasera_putra</item>
     </string-array>
+    <string-array name="server_pujasera">
+        <item>CAGAK</item>
+        <item>WANAREJA</item>
+    </string-array>
     <string name="pjs">pujasera</string>
+    <string name="server_pjs">Server_pujasera</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.projectassyifa.cashier_pujasera.data.sendReport.repo
 
 import android.content.Context
+import android.os.Handler
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -8,6 +9,7 @@ import com.google.gson.reflect.TypeToken
 import com.projectassyifa.cashier_pujasera.data.member.model.MemberModel
 import com.projectassyifa.cashier_pujasera.data.sendReport.api.SendReportAPI
 import com.projectassyifa.cashier_pujasera.data.sendReport.model.SendReportModel
+import com.projectassyifa.cashier_pujasera.screen.alert.Done
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +41,7 @@ class SendReportRepo @Inject constructor(val sendReportAPI: SendReportAPI)  {
                         "data berhasil disimpan",
                         Toast.LENGTH_SHORT
                     ).show()
+
                 } else {
                     Toast.makeText(
                         context,
@@ -54,7 +57,7 @@ class SendReportRepo @Inject constructor(val sendReportAPI: SendReportAPI)  {
                 t.printStackTrace()
                 Toast.makeText(
                     context,
-                    "Kesalahan server!",
+                    "Kesalahan server! atau cek koneksi anda",
                     Toast.LENGTH_SHORT
                 ).show()
             }

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.projectassyifa.cashier_pujasera.R
 import com.projectassyifa.cashier_pujasera.container.MyApplication
 import com.projectassyifa.cashier_pujasera.room.SaleModel
-import kotlinx.android.synthetic.main.adapter_report.view.*
+import kotlinx.android.synthetic.main.adapter_report_lokal.view.*
 
 class ReportAdapter (var listReport :ArrayList<SaleModel>,var activity: Activity) : RecyclerView.Adapter<ReportAdapter.SaleVH>() {
     class SaleVH (val view : View): RecyclerView.ViewHolder(view)
@@ -23,7 +23,7 @@ class ReportAdapter (var listReport :ArrayList<SaleModel>,var activity: Activity
         (activity?.applicationContext as MyApplication).applicationComponent.inject(this)
       return SaleVH(
 
-          LayoutInflater.from(parent.context).inflate(R.layout.adapter_report,parent,false)
+          LayoutInflater.from(parent.context).inflate(R.layout.adapter_report_lokal,parent,false)
       )
     }
 

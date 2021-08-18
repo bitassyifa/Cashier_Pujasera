@@ -16,6 +16,16 @@
         android:layout_margin="14dp"
         android:fontFamily="@font/poppins_medium"
         android:textSize="15dp"/>
+    <TextView
+        android:id="@+id/server_pjs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="14dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/pjsr"/>
 
     <TextView
         android:id="@+id/nama_kasir"
@@ -26,7 +36,7 @@
         android:text=""
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pjsr" />
+        app:layout_constraintTop_toBottomOf="@+id/server_pjs" />
 
 
     <ImageView
@@ -76,7 +86,7 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:padding="10dp"
-                    android:src="@drawable/lg_fadi" />
+                    android:src="@drawable/payment_fd" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -84,7 +94,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="Kartu Fadipay"
+                    android:text="Fadipay Payment"
                     android:textColor="@color/inti" />
             </LinearLayout>
 
@@ -95,6 +105,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:padding="5dp"
                     android:id="@+id/menu2"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
@@ -103,7 +114,7 @@
                     android:background="@drawable/rect"
                     android:clickable="true"
                     android:elevation="4dp"
-                    android:src="@drawable/cash" />
+                    android:src="@drawable/cash1" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -111,36 +122,36 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="Cash"
+                    android:text="Cash Payment"
                     android:textColor="@color/inti" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical">-->
 
-                <ImageView
-                    android:id="@+id/menu3"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rect"
-                    android:clickable="true"
-                    android:elevation="4dp"
-                    android:src="@drawable/saku" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/menu3"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/rect"-->
+<!--                    android:clickable="true"-->
+<!--                    android:elevation="4dp"-->
+<!--                    android:src="@drawable/saku" />-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:gravity="center"
-                    android:text="Uang Saku"
-                    android:textColor="@color/inti" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:fontFamily="@font/poppins_semibold"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="Uang Saku"-->
+<!--                    android:textColor="@color/inti" />-->
+<!--            </LinearLayout>-->
 
         </LinearLayout>
 
@@ -152,6 +163,33 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/menu4"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/rect"-->
+<!--                    android:clickable="true"-->
+<!--                    android:elevation="4dp"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:src="@drawable/report" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:fontFamily="@font/poppins_semibold"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="Report Lokal"-->
+<!--                    android:textColor="@color/inti" />-->
+<!--            </LinearLayout>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,7 +197,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/menu4"
+                    android:id="@+id/menu5"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -168,7 +206,7 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:padding="10dp"
-                    android:src="@drawable/report" />
+                    android:src="@drawable/reports" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -176,9 +214,10 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="Report"
+                    android:text="Report "
                     android:textColor="@color/inti" />
             </LinearLayout>
+
 
             <!--            <LinearLayout-->
             <!--                android:layout_width="match_parent"-->
@@ -224,7 +263,7 @@
                     android:clickable="true"
                     android:elevation="4dp"
                     android:padding="10dp"
-                    android:src="@drawable/profil" />
+                    android:src="@drawable/portofolio" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -232,7 +271,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="Profil"
+                    android:text="Portofolio"
                     android:textColor="@color/inti" />
             </LinearLayout>
         </LinearLayout>
