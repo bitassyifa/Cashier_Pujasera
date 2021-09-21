@@ -6,6 +6,7 @@ import com.projectassyifa.cashier_pujasera.data.income.api.IncomeAPI
 import com.projectassyifa.cashier_pujasera.data.login.api.UserLoginAPI
 import com.projectassyifa.cashier_pujasera.data.member.api.CekPinAPI
 import com.projectassyifa.cashier_pujasera.data.member.api.MemberAPI
+import com.projectassyifa.cashier_pujasera.data.merchant.api.MerchantAPI
 import com.projectassyifa.cashier_pujasera.data.sendReport.api.ReportAPI
 import com.projectassyifa.cashier_pujasera.data.sendReport.api.SendReportAPI
 import dagger.Module
@@ -15,7 +16,7 @@ import dagger.Provides
 class NetworkModul {
     @Provides
     fun provideUserLoginAPI(): UserLoginAPI {
-        return Connect.urlLogin().create(UserLoginAPI::class.java)
+        return Connect.urlMember().create(UserLoginAPI::class.java)
     }
 
     @Provides
@@ -37,5 +38,9 @@ class NetworkModul {
     @Provides
     fun provideIncomeAPI(): IncomeAPI {
         return Connect.urlMember().create(IncomeAPI::class.java)
+    }
+    @Provides
+    fun provideMerchantAPI(): MerchantAPI {
+        return Connect.urlMember().create(MerchantAPI::class.java)
     }
 }

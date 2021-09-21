@@ -32,6 +32,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -72,7 +75,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
- 
+    //qrcode
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
 
     // Coroutines
     def coroutines_version = "1.3.9"

@@ -12,7 +12,7 @@ import com.projectassyifa.cashier_pujasera.R
 import com.projectassyifa.cashier_pujasera.container.MyApplication
 import com.projectassyifa.cashier_pujasera.data.income.model.IncomeModel
 import com.projectassyifa.cashier_pujasera.data.income.vm.IncomeVM
-import com.projectassyifa.cashier_pujasera.data.sendReport.model.SendReportModel
+//import com.projectassyifa.cashier_pujasera.data.sendReport.model.SendReportModel
 import kotlinx.android.synthetic.main.activity_income.*
 import kotlinx.android.synthetic.main.activity_income.nama_kasir
 import kotlinx.android.synthetic.main.activity_income.tgl1
@@ -56,12 +56,15 @@ class IncomeActivity : AppCompatActivity() {
             getString(R.string.pjs),
             getString(R.string.default_value)
         )
-
+        val merchant = dataLogin?.getString(
+            getString(R.string.merchant),
+            getString(R.string.default_value)
+        )
         val sdf = SimpleDateFormat("dd-M-yyyy")
         val currentDate = sdf.format(Date())
         tgl1.text = currentDate
         nama_kasir.text = nama
-        pujsr.text =pjs
+        pujsr.text = merchant
         server_pujasera.text=server
 
         val foto = dataLogin?.getString(
@@ -78,7 +81,7 @@ class IncomeActivity : AppCompatActivity() {
 
         val dataSend = IncomeModel(
             server = server.toString(),
-            db = pjs.toString(),
+            db = merchant.toString(),
             created_by = username!!,
             created_date = currentDate
         )
@@ -120,8 +123,8 @@ class IncomeActivity : AppCompatActivity() {
             getString(R.string.default_value)
         )
 
-        val pjs= dataLogin?.getString(
-            getString(R.string.pjs),
+        val merchant = dataLogin?.getString(
+            getString(R.string.merchant),
             getString(R.string.default_value)
         )
         val server= dataLogin?.getString(
@@ -132,7 +135,7 @@ class IncomeActivity : AppCompatActivity() {
         tgl1.text = sdf.format(calender.time)
         val dataSend = IncomeModel(
             server = server.toString(),
-            db = pjs.toString(),
+            db = merchant.toString(),
             created_by = username!!,
             created_date = sdf.format(calender.time)
         )

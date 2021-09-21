@@ -9,6 +9,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface UserLoginAPI {
-    @POST("hrd/api/")
+    @POST("api_login")
     fun loginUser(@Body userLoginModel : UserLoginModel):Call<ResponseAPI>
 }

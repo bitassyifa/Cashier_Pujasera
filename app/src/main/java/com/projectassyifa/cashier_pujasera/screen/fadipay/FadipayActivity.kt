@@ -1,11 +1,13 @@
 package com.projectassyifa.cashier_pujasera.screen.fadipay
 
+import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.nfc.FormatException
 import android.nfc.NfcAdapter
@@ -17,16 +19,25 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.application.isradeleon.thermalprinter.ConnectBluetoothActivity
 import com.application.isradeleon.thermalprinter.models.PrintAlignment
 import com.application.isradeleon.thermalprinter.models.PrintFont
 import com.application.isradeleon.thermalprinter.models.ThermalPrinter
+import com.budiyev.android.codescanner.AutoFocusMode
+import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.CodeScannerView
+import com.budiyev.android.codescanner.DecodeCallback
+import com.budiyev.android.codescanner.ErrorCallback
+import com.budiyev.android.codescanner.ScanMode
 import com.projectassyifa.cashier_pujasera.R
 import com.projectassyifa.cashier_pujasera.container.MyApplication
 import com.projectassyifa.cashier_pujasera.data.login.model.UserLoginModel
@@ -39,8 +50,11 @@ import com.projectassyifa.cashier_pujasera.room.SaleDB
 import com.projectassyifa.cashier_pujasera.room.SaleModel
 import com.projectassyifa.cashier_pujasera.screen.alert.Done
 import com.projectassyifa.cashier_pujasera.screen.alert.Failed
+import com.projectassyifa.cashier_pujasera.screen.alert.LoginFailed
+import com.projectassyifa.cashier_pujasera.screen.alert.PaymentFailed
 import com.projectassyifa.cashier_pujasera.screen.fadipay.nfc.WritableTag
 import com.projectassyifa.cashier_pujasera.screen.home.HomeActivity
+import com.projectassyifa.cashier_pujasera.screen.qrcode.QRcodeActivity
 import kotlinx.android.synthetic.main.activity_fadipay.*
 import kotlinx.android.synthetic.main.activity_report.*
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -54,10 +68,10 @@ import javax.inject.Inject
 
 class FadipayActivity : AppCompatActivity(), View.OnClickListener {
     private var adapter: NfcAdapter? = null
+    private lateinit var codeScanner: CodeScanner
 
     var tag: WritableTag? = null
-//    var tagId: Int = 0
-var tagId: String? =null
+    var tagId: String? =null
     var dataLogin: SharedPreferences? = null
     var nama_pelanggan : String ? = null
     var nomor_kartu : String? = null
@@ -65,7 +79,7 @@ var tagId: String? =null
     var saldo_fadi : Int = 0
     var sum : Int =0
     var status_pin  : Boolean = false
-
+    var kirim_fadipay  : Boolean = false
 
     val db by lazy { SaleDB(this) }
 
@@ -88,20 +102,50 @@ var tagId: String? =null
             getString(R.string.shared_preference_name),
             Context.MODE_PRIVATE
         )
-        initNfcAdapter()
-        val pjs= dataLogin?.getString(
-            getString(R.string.pjs),
-            getString(R.string.default_value)
-        )
 
+
+
+
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)==
+//            PackageManager.PERMISSION_DENIED){
+//            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),123)
+//        } else {
+////                scanner_view1.isVisible = true
+////                fd.isVisible = false
+//            scanQR()
+//        }
+//        scanner_view1.isVisible = false
+
+//        btn_qr.setOnClickListener {
+//            scanner_view1.isVisible = true
+//            fd.isVisible = false
+//            startActivity(Intent(this,QRcodeActivity::class.java))
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)==
+//                PackageManager.PERMISSION_DENIED){
+//                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),123)
+//            } else {
+////                scanner_view1.isVisible = true
+////                fd.isVisible = false
+//                scanQR()
+//            }
+//                            scanner_view1.isVisible = true
+//                fd.isVisible = false
+//            scanQR()
+//        }
+
+        initNfcAdapter()
+
+//
         btn_save.isVisible = false
         btn_print.isVisible = false
 
-
+//        var bundle : Bundle? = intent.extras
+//        var resultScanner = bundle!!.getString("result_scan")
+//        println("HASIL SCAN $resultScanner")
 
 
         cekpin1.setOnClickListener {
-
+            hideKeyboard()
             if (TextUtils.isEmpty(pin_fadi.getText())) {
 
 
@@ -110,12 +154,21 @@ var tagId: String? =null
                 cekpinVM.responseData?.observe(this, androidx.lifecycle.Observer {
 
                     status_pin = it.status
+                    println("STATUS PIN $status_pin")
+
                     if (status_pin == true) {
 
+                        println("STATUS ${it.status}")
                         btn_save.isVisible = true
                         btn_print.isVisible = true
+//                      Payment()
+
+
                     } else {
-                        pin_fadi.setText(" ")
+                        pin_fadi.setText("")
+//                        refresh()
+//                        btn_save.isVisible = false
+//                        btn_print.isVisible = false
                     }
 
                 })
@@ -128,9 +181,10 @@ var tagId: String? =null
                 cekpinVM.member(dataCekpin, this)
             }
         }
+
         btn_save.setOnClickListener{
-   val pjs= dataLogin?.getString(
-                getString(R.string.pjs),
+            val merchant = dataLogin?.getString(
+                getString(R.string.merchant),
                 getString(R.string.default_value)
             )
             val username = dataLogin?.getString(
@@ -143,16 +197,25 @@ var tagId: String? =null
                     "DATA TRANSAKSI BELUM LENGKAP!!",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else  {
-                if (saldo_fadi < sum) {
+            } else {
+                if (sum <= 0) {
+
                     Toast.makeText(
                         this,
-                        "Saldo Tidak Mencukupi!",
+                        "Total belanja masih 0!",
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    val sdf = SimpleDateFormat("dd-M-yyyy")
-                    val currentDate = sdf.format(Date())
+
+                    if (saldo_fadi < sum) {
+                        Toast.makeText(
+                            this,
+                            "Saldo Tidak Mencukupi!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        val sdf = SimpleDateFormat("dd-M-yyyy")
+                        val currentDate = sdf.format(Date())
 ////                CoroutineScope(Dispatchers.IO).launch {
 ////                    db.saleDao().addSale(
 ////                        SaleModel(0,nama_pelanggan.toString(),nomor_kartu.toString(),sum,
@@ -160,47 +223,48 @@ var tagId: String? =null
 ////                    )
 ////
 ////                }
-                    val server= dataLogin?.getString(
-                        getString(R.string.server_pjs),
-                        getString(R.string.default_value)
-                    )
+                        val server = dataLogin?.getString(
+                            getString(R.string.server_pjs),
+                            getString(R.string.default_value)
+                        )
+                        val dataSend = SendReportModel(
+                            server = server.toString(),
+                            db = merchant.toString(),
+                            jumlah = sum.toString(),
+                            id_pelanggan = nomor_kartu!!,
+                            nama_pelanggan = nama_pelanggan!!,
+                            created_by = username!!
+                        )
 
-                    val dataSend = SendReportModel(
-                        server = server.toString(),
-                        db = pjs.toString(),
-                        jumlah = sum.toString(),
-                        id_pelanggan = nomor_kartu!!,
-                        nama_pelanggan = nama_pelanggan!!,
-                        created_by = username!!
-                    )
 //            println("DATA JUMLAH ${dataSend.jumlah},DATA SERVER ${dataSend.server},DATA db ${dataSend.db},DATA id plnggn ${dataSend.id_pelanggan},DATA namapelanggan ${dataSend.nama_pelanggan},DATA created${dataSend.created_by}")
-                    sendReportVM.data_response?.observe(this, Observer {
-                        if (it.kirim_fadi == true){
+                        sendReportVM.data_response?.observe(this, Observer {
+                            if (it.kirim_fadi == true) {
 
-                    val loading = Done(this)
-                    loading.startLoading()
-                    val handler = Handler()
-                    handler.postDelayed(object :Runnable{
-                        override fun run() {
-                            loading.isDismiss()
-                        }
+//                                val loading = Done(this)
+//                    loading.startLoading()
+//                    val handler = Handler()
+//                    handler.postDelayed(object : Runnable {
+//                        override fun run() {
+//                            loading.isDismiss()
+//                        }
+//
+//                    }, 1500)
+//                                Nama.setText("")
+//                                No_kartu.setText("")
+//                                saldo.setText("")
+//                                pin_fadi.setText("")
+//                                Harga.setText("")
+//                                total.setText("0")
+//                                sum = 0
+//                                status_pin = false
+//                                btn_save.isVisible = false
+//                                btn_print.isVisible = false
+//                                Thread.sleep(3_000)  //
+                                refresh()
 
-                    },3000)
-                            Nama.setText("")
-                            No_kartu.setText("")
-                            saldo.setText("")
-                            pin_fadi.setText("")
-                            Harga.setText("")
-                            total.setText("0")
-                            sum =0
-                            status_pin = false
-                            btn_save.isVisible = false
-                            btn_print.isVisible = false
-                        }
-                    })
-                    sendReportVM.reporting(dataSend,this@FadipayActivity)
-
-
+                            }
+                        })
+                        sendReportVM.reporting(dataSend, this@FadipayActivity)
 
 
 //
@@ -209,9 +273,9 @@ var tagId: String? =null
 //                    ConnectBluetoothActivity.CONNECT_BLUETOOTH
 //                )
 
+                    }
                 }
             }
-
 
         }
 
@@ -235,11 +299,186 @@ var tagId: String? =null
             Harga.setText("")
             total.setText("0")
             sum =0
+
+        }
+
+
+
         }
 
 
+    fun hideKeyboard() {
 
-        }
+        val imm = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+    }
+//    private fun Payment() {
+//        val merchant = dataLogin?.getString(
+//            getString(R.string.merchant),
+//            getString(R.string.default_value)
+//        )
+//        val username = dataLogin?.getString(
+//            getString(R.string.username),
+//            getString(R.string.default_value)
+//        )
+//        if (nama_pelanggan == null ){
+//            Toast.makeText(
+//                this,
+//                "DATA TRANSAKSI BELUM LENGKAP!!",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//        } else {
+//            if (sum <= 0) {
+//
+//                Toast.makeText(
+//                    this,
+//                    "Total belanja masih 0!",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            } else {
+//
+//                if (saldo_fadi < sum) {
+//                    Toast.makeText(
+//                        this,
+//                        "Saldo Tidak Mencukupi!",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                } else {
+//                    val sdf = SimpleDateFormat("dd-M-yyyy")
+//                    val currentDate = sdf.format(Date())
+//////                CoroutineScope(Dispatchers.IO).launch {
+//////                    db.saleDao().addSale(
+//////                        SaleModel(0,nama_pelanggan.toString(),nomor_kartu.toString(),sum,
+//////                            currentDate.toString(),pjs.toString(),"WANAREJA",username.toString(),"OPEN")
+//////                    )
+//////
+//////                }
+//                    val server = dataLogin?.getString(
+//                        getString(R.string.server_pjs),
+//                        getString(R.string.default_value)
+//                    )
+//                    val dataSend = SendReportModel(
+//                        server = server.toString(),
+//                        db = merchant.toString(),
+//                        jumlah = sum.toString(),
+//                        id_pelanggan = nomor_kartu!!,
+//                        nama_pelanggan = nama_pelanggan!!,
+//                        created_by = username!!
+//                    )
+//
+////            println("DATA JUMLAH ${dataSend.jumlah},DATA SERVER ${dataSend.server},DATA db ${dataSend.db},DATA id plnggn ${dataSend.id_pelanggan},DATA namapelanggan ${dataSend.nama_pelanggan},DATA created${dataSend.created_by}")
+//                    sendReportVM.data_response?.observe(this, Observer {
+//                        kirim_fadipay = it.kirim_fadi
+//                        if (kirim_fadipay == true) {
+//
+//
+//                                            Nama.setText("")
+//                                            No_kartu.setText("")
+//                                            saldo.setText("")
+//                                            pin_fadi.setText("")
+//                                            Harga.setText("")
+//                                            total.setText("0")
+//                                            sum = 0
+//                                            status_pin = false
+//                                            kirim_fadipay = false
+////                                Thread.sleep(3_000)  //
+//
+////                            refresh()
+//
+//                        } else {
+//                                                val loading = PaymentFailed(this)
+//                    loading.startLoading()
+//                    val handler = Handler()
+//                    handler.postDelayed(object : Runnable {
+//                        override fun run() {
+//                            loading.isDismiss()
+//                        }
+//
+//                    }, 3000)
+//                        }
+//                    })
+//                    sendReportVM.reporting(dataSend, this@FadipayActivity)
+//
+//
+////
+////                startActivityForResult(
+////                    Intent(this, ConnectBluetoothActivity::class.java),
+////                    ConnectBluetoothActivity.CONNECT_BLUETOOTH
+////                )
+//
+//                }
+//            }
+//        }
+//    }
+
+    private fun refresh() {
+//
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
+    }
+
+//    private fun scanQR() {
+//        val scannerView : CodeScannerView = findViewById(R.id.scanner_view1)
+//        codeScanner = CodeScanner(this,scannerView)
+//        codeScanner .camera = CodeScanner.CAMERA_BACK
+//        codeScanner.formats = CodeScanner.ALL_FORMATS
+//        codeScanner.autoFocusMode = AutoFocusMode.SAFE
+//        codeScanner.scanMode = ScanMode.SINGLE
+//        codeScanner.isAutoFocusEnabled =true
+//        codeScanner.isFlashEnabled = true
+//        codeScanner.decodeCallback = DecodeCallback {
+//            runOnUiThread {
+////                Toast.makeText(this,"HASIL SCAN ${it.text}",Toast.LENGTH_SHORT).show()
+//                memberVM.responseData?.observe(this, Observer {
+////            Nama.text = "Apinchocs"
+//                    Nama.text = it.nama
+////            println(" no kartu ${it.no_kartu}")
+//                    No_kartu.text = it.no_kartu
+//                    saldo.text = it.saldo.toString()
+//                    saldo_fadi = it.saldo
+//                    nama_pelanggan = it.nama
+//                    nomor_kartu = it.no_kartu
+//
+//                })
+//                val data = MemberModel(
+//                    no_kartu = it.text
+//                )
+//                memberVM.member(data,this)
+////                scanner_view1.isVisible = false
+////                fd.isVisible = true
+////                val move = Intent(this,FadipayActivity::class.java)
+////                move.putExtra("result_scan",it.text)
+////                startActivity(move)
+////                finish()
+//            }
+//        }
+//        codeScanner.errorCallback = ErrorCallback {
+//            runOnUiThread {
+//                Toast.makeText(this,"error bous",Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        scannerView.setOnClickListener {
+//            codeScanner.startPreview()
+//        }
+//    }
+
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == 123){
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                Toast.makeText(this,"Camera diizinkan",Toast.LENGTH_SHORT).show()
+//                scanQR()
+//            } else {
+//                Toast.makeText(this,"Camera tidak di izinkan",Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 
 
 
@@ -254,14 +493,17 @@ var tagId: String? =null
             getString(R.string.pjs),
             getString(R.string.default_value)
         )
-
+        val merchant = dataLogin?.getString(
+            getString(R.string.merchant),
+            getString(R.string.default_value)
+        )
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         val timeNow = sdf.format(Date())
         if(resultCode == Activity.RESULT_OK && requestCode == ConnectBluetoothActivity.CONNECT_BLUETOOTH){
             // ThermalPrinter is ready
             ThermalPrinter.instance
 
-                .write("$pjs", PrintAlignment.CENTER, PrintFont.LARGE)
+                .write("$merchant", PrintAlignment.CENTER, PrintFont.LARGE)
                 .writeImage(BitmapFactory.decodeResource(getResources(), R.drawable.lg_cashier_p))
                 .fillLineWith('-')
                 .write("")
@@ -300,10 +542,18 @@ var tagId: String? =null
 
     override fun onResume() {
         super.onResume()
+        if (::codeScanner.isInitialized){
+            codeScanner?.startPreview()
+
+        }
         enableNfcForegroundDispatch()
     }
 
     override fun onPause() {
+        if (::codeScanner.isInitialized){
+            codeScanner?.releaseResources()
+
+        }
         disableNfcForegroundDispatch()
         super.onPause()
     }
@@ -326,6 +576,7 @@ var tagId: String? =null
         }
     }
 
+
     private fun getTag() = "FadipayActivity"
 
     override fun onNewIntent(intent: Intent) {
@@ -339,13 +590,13 @@ var tagId: String? =null
         }
         tagId = tag?.tagId.toString()
 //        showToast("Tag tapped: $tagId")
-        println("NOMOR KARTU $tagId")
+//        println("NOMOR KARTU $tagId")
 
         //data member
         memberVM.responseData?.observe(this, Observer {
 //            Nama.text = "Apinchocs"
             Nama.text = it.nama
-            println(" no kartu ${it.no_kartu}")
+//            println(" no kartu ${it.no_kartu}")
             No_kartu.text = it.no_kartu
             saldo.text = it.saldo.toString()
             saldo_fadi = it.saldo
@@ -424,6 +675,7 @@ var tagId: String? =null
             }
         }
     }
+
     }
 
 

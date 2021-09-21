@@ -28,12 +28,24 @@
     <string name="selected_item">select</string>
     <string-array name="pujasera">
         <item>pujasera_putri</item>
+        <item>pujasera_putri_mlm</item>
         <item>pujasera_putra</item>
+        <item>pujasera_putra_mlm</item>
     </string-array>
     <string-array name="server_pujasera">
         <item>CAGAK</item>
         <item>WANAREJA</item>
     </string-array>
     <string name="pjs">pujasera</string>
+    <string name="merchant">merchant</string>
     <string name="server_pjs">Server_pujasera</string>
+    <string name="title_activity_qrcode">QRcodeActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

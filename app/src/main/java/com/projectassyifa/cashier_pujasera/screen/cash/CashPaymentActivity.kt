@@ -54,8 +54,8 @@ class CashPaymentActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val pjs = dataLogin?.getString(
-                    getString(R.string.pjs),
+                val merchant = dataLogin?.getString(
+                    getString(R.string.merchant),
                     getString(R.string.default_value)
                 )
                 val username = dataLogin?.getString(
@@ -69,10 +69,11 @@ class CashPaymentActivity : AppCompatActivity() {
 
                 val dataSend = SendReportModel(
                     server = server.toString(),
-                    db = pjs.toString(),
+                    db = merchant.toString(),
                     jumlah = sum.toString(),
                     created_by = username!!
                 )
+                println("DATA CASH ${dataSend.server}, ${dataSend.db}, ${dataSend.jumlah}, ${dataSend.created_by}")
                 sendReportVM.data_response?.observe(this, androidx.lifecycle.Observer {
                     if (it.success == true) {
                         val loading = Done(this)
@@ -122,6 +123,10 @@ class CashPaymentActivity : AppCompatActivity() {
             getString(R.string.pjs),
             getString(R.string.default_value)
         )
+        val merchant = dataLogin?.getString(
+            getString(R.string.merchant),
+            getString(R.string.default_value)
+        )
 
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         val timeNow = sdf.format(Date())
@@ -129,7 +134,7 @@ class CashPaymentActivity : AppCompatActivity() {
             // ThermalPrinter is ready
             ThermalPrinter.instance
 
-                .write("$pjs", PrintAlignment.CENTER, PrintFont.LARGE)
+                .write("$merchant", PrintAlignment.CENTER, PrintFont.LARGE)
                 .writeImage(BitmapFactory.decodeResource(getResources(), R.drawable.lg_kasir_p))
                 .fillLineWith('-')
                 .write("")

@@ -46,8 +46,8 @@ class ReportServerActivity : AppCompatActivity() {
         val sdf = SimpleDateFormat("dd-M-yyyy")
         val currentDate = sdf.format(Date())
         tgl1.text = currentDate
-        val pjs= dataLogin?.getString(
-            getString(R.string.pjs),
+        val merchant = dataLogin?.getString(
+            getString(R.string.merchant),
             getString(R.string.default_value)
         )
         val server= dataLogin?.getString(
@@ -58,7 +58,7 @@ class ReportServerActivity : AppCompatActivity() {
             created_by = username.toString(),
             created_date = currentDate,
             server = server.toString(),
-            db = pjs.toString()
+            db = merchant.toString()
 
         )
         report_server.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
@@ -97,8 +97,8 @@ class ReportServerActivity : AppCompatActivity() {
             getString(R.string.default_value)
         )
 
-        val pjs= dataLogin?.getString(
-            getString(R.string.pjs),
+        val merchant = dataLogin?.getString(
+            getString(R.string.merchant),
             getString(R.string.default_value)
         )
         val server= dataLogin?.getString(
@@ -111,7 +111,7 @@ class ReportServerActivity : AppCompatActivity() {
             created_by = username.toString(),
             created_date = sdf.format(calender.time),
             server = server.toString(),
-            db = pjs.toString()
+            db = merchant.toString()
 
         )
         report_server.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)

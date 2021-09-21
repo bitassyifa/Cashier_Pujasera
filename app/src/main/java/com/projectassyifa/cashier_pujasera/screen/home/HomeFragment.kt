@@ -14,7 +14,7 @@ import com.projectassyifa.cashier_pujasera.screen.cash.CashPaymentActivity
 import com.projectassyifa.cashier_pujasera.screen.fadipay.FadipayActivity
 import com.projectassyifa.cashier_pujasera.screen.income.IncomeActivity
 import com.projectassyifa.cashier_pujasera.screen.login.Login_Activity
-import com.projectassyifa.cashier_pujasera.screen.report.ReportActivity
+//import com.projectassyifa.cashier_pujasera.screen.report.ReportActivity
 import com.projectassyifa.cashier_pujasera.screen.report_server.ReportServerActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -73,7 +73,11 @@ class HomeFragment : Fragment(),View.OnClickListener {
             getString(R.string.server_pjs),
             getString(R.string.default_value)
         )
-        pjsr.text = pjs
+        val merchant = dataLogin?.getString(
+            getString(R.string.merchant),
+            getString(R.string.default_value)
+        )
+        pjsr.text = merchant
         server_pjs.text= server
         nama_kasir.text = "ahlan, $nama"
     }
