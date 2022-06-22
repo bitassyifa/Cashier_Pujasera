@@ -135,11 +135,11 @@ class CashPaymentActivity : AppCompatActivity() {
             ThermalPrinter.instance
 
                 .write("$merchant", PrintAlignment.CENTER, PrintFont.LARGE)
-                .writeImage(BitmapFactory.decodeResource(getResources(), R.drawable.lg_kasir_p))
+                .writeImage(BitmapFactory.decodeResource(getResources(), R.drawable.lgloundry))
                 .fillLineWith('-')
                 .write("")
 
-                .write("Total Belanja : $total_belanja  ", PrintAlignment.CENTER, PrintFont.LARGE)
+                .write("Total Belanja : $total_belanja  ", PrintAlignment.LEFT, PrintFont.NORMAL)
                 .write("")
                 .fillLineWith('-')
                 .write("Kasir  : $nama_kasir  ", PrintAlignment.LEFT, PrintFont.NORMAL)

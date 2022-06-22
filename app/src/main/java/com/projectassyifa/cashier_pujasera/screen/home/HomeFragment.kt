@@ -74,7 +74,7 @@ class HomeFragment : Fragment(),View.OnClickListener {
             getString(R.string.default_value)
         )
         val merchant = dataLogin?.getString(
-            getString(R.string.merchant),
+            getString(R.string.name_merchant),
             getString(R.string.default_value)
         )
         pjsr.text = merchant

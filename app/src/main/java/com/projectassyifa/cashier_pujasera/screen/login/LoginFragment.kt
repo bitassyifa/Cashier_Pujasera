@@ -102,8 +102,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                                             view: View, position: Int, id: Long) {
                     pujasera = it[position].db
                     merchant = it[position].nama_merchant
-                    println("MERCHANT LOGIN $pujasera")
-                    println("MERCHANT LOGIN $merchant")
+
 
                 }
 
@@ -194,6 +193,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
 //                                this?.putString(getString(R.string.struktural), it.struktural)
 //                                this?.putString(getString(R.string.atasan_langsung), it.atasan_langsung)
                                 this?.putString(getString(R.string.email), it.email)
+                                this?.putString(getString(R.string.name_merchant), merchant)
 //                                this?.putString(getString(R.string.pjs), pujasera)
                                 this?.putString(getString(R.string.merchant), it.db)
                                 this?.putString(getString(R.string.server_pjs), it.server)

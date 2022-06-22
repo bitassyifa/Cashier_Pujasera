@@ -2,6 +2,7 @@ package com.projectassyifa.cashier_pujasera.screen.fadipay
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.content.Context
@@ -54,6 +55,7 @@ import com.projectassyifa.cashier_pujasera.screen.alert.LoginFailed
 import com.projectassyifa.cashier_pujasera.screen.alert.PaymentFailed
 import com.projectassyifa.cashier_pujasera.screen.fadipay.nfc.WritableTag
 import com.projectassyifa.cashier_pujasera.screen.home.HomeActivity
+import com.projectassyifa.cashier_pujasera.screen.login.Login_Activity
 import com.projectassyifa.cashier_pujasera.screen.qrcode.QRcodeActivity
 import kotlinx.android.synthetic.main.activity_fadipay.*
 import kotlinx.android.synthetic.main.activity_report.*
@@ -286,19 +288,50 @@ class FadipayActivity : AppCompatActivity(), View.OnClickListener {
 
 //                total.text =
 //                    (Harga.value + total.text.toString().toInt() + 0).toString()
-             sum = (Harga.value + sum).toInt()
 
 
-            val localeID = Locale("in", "ID")
-            val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
-            total.setText(formatRupiah.format(sum))
-            total_belanja = total.text.toString()
-            Harga.setText("0")
+
+            if (sum + Harga.value >= 20000){
+
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Konfirmasi Bayar")
+
+                // Display a message on alert dialog
+                builder.setMessage("Apakah anda yakin melakukan transaksi sejumlah Rp. ${sum + Harga.value}?")
+
+                // Set a positive button and its click listener on alert dialog
+                builder.setPositiveButton("Ya") { dialog, which ->
+                    sum = (Harga.value + sum).toInt()
+                    val localeID = Locale("in", "ID")
+                    val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
+                    total.setText(formatRupiah.format(sum))
+                    total_belanja = total.text.toString()
+                    Harga.setText("0")
+                }
+
+                builder.setNegativeButton("Tidak"){dialog,which ->
+
+                }
+
+
+                val dialog: AlertDialog = builder.create()
+
+                dialog.show()
+            } else {
+                sum = (Harga.value + sum).toInt()
+                val localeID = Locale("in", "ID")
+                val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
+                total.setText(formatRupiah.format(sum))
+                total_belanja = total.text.toString()
+                Harga.setText("0")
+            }
+
+
         }
         btn_clear.setOnClickListener {
             Harga.setText("")
             total.setText("0")
-            sum =0
+            sum = 0
 
         }
 
@@ -504,11 +537,11 @@ class FadipayActivity : AppCompatActivity(), View.OnClickListener {
             ThermalPrinter.instance
 
                 .write("$merchant", PrintAlignment.CENTER, PrintFont.LARGE)
-                .writeImage(BitmapFactory.decodeResource(getResources(), R.drawable.lg_cashier_p))
+                .writeImage(BitmapFactory.decodeResource(getResources(), R.drawable.lgloundry))
                 .fillLineWith('-')
                 .write("")
                 .write("Nama Pelanggan : $nama_pelanggan  ",PrintAlignment.LEFT, PrintFont.NORMAL)
-                .write("Total Belanja : $total_belanja  ",PrintAlignment.LEFT, PrintFont.NORMAL)
+                .write("Total : $total_belanja  ",PrintAlignment.LEFT, PrintFont.NORMAL)
                 .write("")
                 .fillLineWith('-')
 

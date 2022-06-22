@@ -39,7 +39,6 @@ class AdapterMerchant (var dataSource : List<MerchantModel>, val context: Contex
         }
         vh.nama_merchant.text = dataSource.get(position).nama_merchant
         kode_db = dataSource.get(position).db
-        println("KODE DB $kode_db")
         return view
     }
 

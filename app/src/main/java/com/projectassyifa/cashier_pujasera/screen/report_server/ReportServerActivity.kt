@@ -90,8 +90,8 @@ class ReportServerActivity : AppCompatActivity() {
     }
 
     private fun updateTgl() {
-        val formatTgl = "dd-MM-yyyy"
-        val sdf = SimpleDateFormat(formatTgl,Locale.US)
+            val formatTgl = "dd-MM-yyyy"
+            val sdf = SimpleDateFormat(formatTgl,Locale.US)
         val username = dataLogin?.getString(
             getString(R.string.username),
             getString(R.string.default_value)

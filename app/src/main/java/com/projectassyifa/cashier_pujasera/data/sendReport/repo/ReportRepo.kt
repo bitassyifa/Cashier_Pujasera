@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken
 import com.projectassyifa.cashier_pujasera.data.sendReport.api.ReportAPI
 import com.projectassyifa.cashier_pujasera.data.sendReport.model.ReportModel
 import com.projectassyifa.cashier_pujasera.screen.alert.CekWifi
+import com.projectassyifa.cashier_pujasera.screen.alert.Failed
 import com.projectassyifa.cashier_pujasera.utils.ResponseAPI
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,6 +39,15 @@ class ReportRepo @Inject constructor(val reportAPI: ReportAPI) {
                     report_server.value = outputData
 
                 } else {
+//                    val loading = Failed(context as Activity)
+//                    loading.startLoading()
+//                    val handler = Handler()
+//                    handler.postDelayed(object : Runnable {
+//                        override fun run() {
+//                            loading.isDismiss()
+//                        }
+//
+//                    }, 3000)
                     val gson = Gson()
                     val listData : Type = object : TypeToken<List<ReportModel>?>() {}.type
                     val outputData : List<ReportModel> = gson.fromJson(gson.toJson(dataReport),listData)
