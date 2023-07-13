@@ -1,14 +1,11 @@
 package com.projectassyifa.cashier_pujasera.screen.fadipay
 
-import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.nfc.FormatException
 import android.nfc.NfcAdapter
@@ -16,53 +13,29 @@ import android.nfc.NfcManager
 import android.nfc.Tag
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.application.isradeleon.thermalprinter.ConnectBluetoothActivity
 import com.application.isradeleon.thermalprinter.models.PrintAlignment
 import com.application.isradeleon.thermalprinter.models.PrintFont
 import com.application.isradeleon.thermalprinter.models.ThermalPrinter
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.CodeScannerView
-import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
-import com.budiyev.android.codescanner.ScanMode
 import com.projectassyifa.cashier_pujasera.R
 import com.projectassyifa.cashier_pujasera.container.MyApplication
-import com.projectassyifa.cashier_pujasera.data.login.model.UserLoginModel
 import com.projectassyifa.cashier_pujasera.data.member.model.MemberModel
 import com.projectassyifa.cashier_pujasera.data.member.vm.CekPinVM
 import com.projectassyifa.cashier_pujasera.data.member.vm.MemberVM
 import com.projectassyifa.cashier_pujasera.data.sendReport.model.SendReportModel
 import com.projectassyifa.cashier_pujasera.data.sendReport.vm.SendReportVM
-import com.projectassyifa.cashier_pujasera.room.SaleDB
-import com.projectassyifa.cashier_pujasera.room.SaleModel
-import com.projectassyifa.cashier_pujasera.screen.alert.Done
-import com.projectassyifa.cashier_pujasera.screen.alert.Failed
-import com.projectassyifa.cashier_pujasera.screen.alert.LoginFailed
-import com.projectassyifa.cashier_pujasera.screen.alert.PaymentFailed
 import com.projectassyifa.cashier_pujasera.screen.fadipay.nfc.WritableTag
-import com.projectassyifa.cashier_pujasera.screen.home.HomeActivity
-import com.projectassyifa.cashier_pujasera.screen.login.Login_Activity
-import com.projectassyifa.cashier_pujasera.screen.qrcode.QRcodeActivity
 import kotlinx.android.synthetic.main.activity_fadipay.*
-import kotlinx.android.synthetic.main.activity_report.*
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -70,7 +43,7 @@ import javax.inject.Inject
 
 class FadipayActivity : AppCompatActivity(), View.OnClickListener {
     private var adapter: NfcAdapter? = null
-    private lateinit var codeScanner: CodeScanner
+
 
     var tag: WritableTag? = null
     var tagId: String? =null
@@ -83,7 +56,7 @@ class FadipayActivity : AppCompatActivity(), View.OnClickListener {
     var status_pin  : Boolean = false
     var kirim_fadipay  : Boolean = false
 
-    val db by lazy { SaleDB(this) }
+//    val db by lazy { SaleDB(this) }
 
     @Inject
     lateinit var sendReportVM: SendReportVM
@@ -104,6 +77,31 @@ class FadipayActivity : AppCompatActivity(), View.OnClickListener {
             getString(R.string.shared_preference_name),
             Context.MODE_PRIVATE
         )
+
+        no_kartu1.isVisible = false
+        No_kartu.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                //Perform Code
+                no_kartu1.isVisible = false
+                memberVM.responseData?.observe(this, Observer {
+//            Nama.text = "Apinchocs"
+                    Nama.text = it.nama
+//            println(" no kartu ${it.no_kartu}")
+//            No_kartu.text. = it.no_kartu
+                    saldo.text = it.saldo.toString()
+                    saldo_fadi = it.saldo
+                    nama_pelanggan = it.nama
+                    nomor_kartu = it.no_kartu
+
+                })
+                val data = MemberModel(
+                    no_kartu = No_kartu.text.toString()
+                )
+                memberVM.member(data,this)
+                return@OnKeyListener true
+            }
+            false
+        })
 
 
 
@@ -564,6 +562,7 @@ class FadipayActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initNfcAdapter() {
         val nfcManager = getSystemService(Context.NFC_SERVICE) as NfcManager
+        Log.e("NFC","masuk nfc bosque")
         adapter = nfcManager.defaultAdapter
     }
 
@@ -575,18 +574,18 @@ class FadipayActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        if (::codeScanner.isInitialized){
-            codeScanner?.startPreview()
-
-        }
+//        if (::codeScanner.isInitialized){
+//            codeScanner?.startPreview()
+//
+//        }
         enableNfcForegroundDispatch()
     }
 
     override fun onPause() {
-        if (::codeScanner.isInitialized){
-            codeScanner?.releaseResources()
-
-        }
+//        if (::codeScanner.isInitialized){
+//            codeScanner?.releaseResources()
+//
+//        }
         disableNfcForegroundDispatch()
         super.onPause()
     }
@@ -626,11 +625,14 @@ class FadipayActivity : AppCompatActivity(), View.OnClickListener {
 //        println("NOMOR KARTU $tagId")
 
         //data member
+
         memberVM.responseData?.observe(this, Observer {
+            No_kartu.isVisible = false
+            no_kartu1.isVisible = true
 //            Nama.text = "Apinchocs"
             Nama.text = it.nama
 //            println(" no kartu ${it.no_kartu}")
-            No_kartu.text = it.no_kartu
+           no_kartu1.text = it.no_kartu
             saldo.text = it.saldo.toString()
             saldo_fadi = it.saldo
             nama_pelanggan = it.nama

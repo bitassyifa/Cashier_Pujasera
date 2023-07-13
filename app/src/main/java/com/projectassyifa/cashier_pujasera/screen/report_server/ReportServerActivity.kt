@@ -107,7 +107,7 @@ class ReportServerActivity : AppCompatActivity() {
         )
 
         tgl1.text = sdf.format(calender.time)
-        var data = ReportModel(
+        val data = ReportModel(
             created_by = username.toString(),
             created_date = sdf.format(calender.time),
             server = server.toString(),

@@ -1,6 +1,6 @@
 <resources>
 <!--    <string name="app_name">Cashier_Pujasera</string>-->
-    <string name="app_name">Loundry Mandiri</string>
+    <string name="app_name">Cashier Pujasera</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shared_preference_name">com.projectassyifa.shared.preference</string>
